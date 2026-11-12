@@ -1,47 +1,42 @@
 package problem2;
 
-/**
- *
- * @author ELORCHA_CPE113
- */
 import java.util.Scanner;
 
 public class Elorcha_Problem2 {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        input.useDelimiter("[,\\s]+");
+        // Ignore parentheses, commas, and spaces (keeps '-' for negative validation)
+        input.useDelimiter("[^0-9-]+");
 
+        // Read two numbers from input, e.g., (98,89)
         int a = input.nextInt();
         int b = input.nextInt();
 
-        //Validate Negative inputs
+        int result = gcd(a, b);
+
+        // Validate Negative inputs
         if (a < 0 || b < 0) {
-            System.out.println("Invalid input. ");
-
-            // GCD of two zeros is undefine
+            System.out.print("Invalid Input.");
+            
+            
+// GCD of two zeros is undefine
         } else if (a == 0 && b == 0) {
-            System.out.println("Undefined");
+            System.out.println("Undefined - handle in main()");
+
         } else {
-            int result = gcd(a, b);
-
             System.out.println(result);
-        }
 
+        }
+        input.close();
     }
 
+    // use recursive and using the Euclidean algorithm
     public static int gcd(int a, int b) {
-        //Base case: when b becomes 0, return to a
         if (b == 0) {
             return a;
         }
-
-        //Recursive case: call the gcd using b and the remainder
         return gcd(b, a % b);
-    }
 
-}
+    }
+} 
