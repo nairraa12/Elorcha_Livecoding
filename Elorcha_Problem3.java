@@ -3,30 +3,59 @@ package elorcha_problem3;
 import java.util.Scanner;
 
 public class Elorcha_Problem3 {
+    public static void main(String[] args) {
 
-    // Method 1: Calculate Array Sum
+        Scanner input = new Scanner(System.in);
+
+        String line = input.nextLine();
+
+        // Do not include the braces and unnecessary spaces from the input
+        line = line.replace("{", "").replace("}", "").replace(" ", "");
+
+        // Seperate the input values based on the commas
+        String[] numbers = line.split(",");
+
+        // Input an integer array to hold the converted values
+        int[] values = new int[numbers.length];
+
+        // Convert every input number from String to integer
+        for (int i = 0; i < numbers.length; i++) {
+            values[i] = Integer.parseInt(numbers[i]);
+        }
+
+        // Display results
+        System.out.println();
+        System.out.println(arraySum(values, 0) + ", "
+                + findMaximum(values, 0) + ", "
+                + countEven(values, 0));
+
+        input.close();
+    }
+
+    // Finds the sum of all numbers in the array
     public static int arraySum(int[] values, int index) {
 
-        // Base Case
+       // Stop the recursion when the end of the array is reached
         if (index == values.length) {
             return 0;
         }
 
-        // Recursive Case
+        // Add the current value to the sum of the next elements
         return values[index] + arraySum(values, index + 1);
     }
 
-    // Method 2: Find Maximum Element
+    // Determines the highest number stored in the array
     public static int findMaximum(int[] values, int index) {
 
-        // Base Case
+        // Return the final element when it is the only one left
         if (index == values.length - 1) {
             return values[index];
         }
 
-        // Recursive Case
+        // Get the greatest value from the remaining elements
         int maximum = findMaximum(values, index + 1);
 
+        // Identify which is greater between the current and maximum values
         if (values[index] > maximum) {
             return values[index];
         } else {
@@ -34,41 +63,20 @@ public class Elorcha_Problem3 {
         }
     }
 
-    // Method 3: Count Even Elements
+    // Calculates how many even numbers are present in the array
     public static int countEven(int[] values, int index) {
 
-        // Base Case
+        // Finish the process after reaching the end of the array
         if (index == values.length) {
             return 0;
         }
 
-        // Recursive Case
+        // Determine whether the current number is divisible by two
         if (values[index] % 2 == 0) {
             return 1 + countEven(values, index + 1);
         } else {
+            // Move to the next element without adding to the count
             return countEven(values, index + 1);
         }
-    }
-
-    public static void main(String[] args) {
-
-        Scanner input = new Scanner(System.in);
-        input.useDelimiter("[,\\s]+");
-
-        int[] values = new int[4];
-
-        for (int i = 0; i < values.length; i++) {
-            values[i] = input.nextInt();
-        }
-
-        // Call recursive methods
-        int sum = arraySum(values, 0);
-        int maximum = findMaximum(values, 0);
-        int evenCount = countEven(values, 0);
-
-        // Display results
-        System.out.println(sum + "," + maximum + "," + evenCount);
-
-        input.close();
     }
 }
